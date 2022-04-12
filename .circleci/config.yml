@@ -5,7 +5,7 @@ version: 2.1
 executors:
   docker-publisher: 
     environment:
-      IMAGE_NAME: $DOCKERHUB_USERNAME/cicd-webapp-nodejs:latest
+      IMAGE_NAME: thdesous/cicd-webapp-nodejs:latest
     docker:
       - image: circleci/node:latest
         auth:
