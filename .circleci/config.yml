@@ -9,7 +9,7 @@ executors:
 
 jobs:
   build:
-    working_directory: /app
+    working_directory: ~/repo
     executor: docker-publisher
     steps:
       - checkout
