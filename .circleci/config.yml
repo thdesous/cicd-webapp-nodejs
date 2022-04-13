@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test_build_app:
+  job_build_app:
     working_directory: ~/app
     docker:
       - image: circleci/node:14
@@ -12,6 +12,6 @@ jobs:
             npm install --save
 
 workflows:
-  test_build_app:
+  workflow_builds:
     jobs:
-      - run_tests  
+      - job_build_app
