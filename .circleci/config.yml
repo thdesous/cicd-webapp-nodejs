@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  heroku: circleci/heroku@0.0.10  
+  heroku: circleci/heroku@1.2.6 
 
 jobs:
   job-test-installDependencies:
@@ -13,9 +13,6 @@ jobs:
           name: Install npm dependencies
           command: |
             npm install --save
-
-heroku/deploy-via-git:
-      working_directory: ~/app
 
 workflows:
   wf-test:
