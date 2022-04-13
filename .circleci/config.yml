@@ -1,24 +1,16 @@
 version: 2.1
 jobs:
-  run_app:
+  run_tests:
     docker:
-      - image: thdesous/cicd-webapp-nodejs:latest
+      - image: circleci/node:14
     steps:
       - checkout
-      # - run: 
-      #     name: Install npm dependencies
-      #     command: |
-      #       npm install --save
-      # - run: 
-      #     name: Start service
-      #     command: |
-      #       npm start
       - run: 
-          name: Docker run
+          name: Install npm dependencies
           command: |
-            docker run thdesous/cicd-webapp-nodejs:latest
+            npm install --save
+
 workflows:
-  build:
+  build_test:
     jobs:
-      - run_app
-  
+      - run_tests  
