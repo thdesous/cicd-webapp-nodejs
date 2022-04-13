@@ -22,8 +22,6 @@ workflows:
   wf-deploy:
     jobs:
       - heroku/deploy-via-git:
-          requires:
-            - job-test-installDependencies
           filters:
             branches:
               only: main
