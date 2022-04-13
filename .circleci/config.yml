@@ -9,15 +9,15 @@ jobs:
       - image: cimg/base:stable
     steps:
       - node/install-packages:
-          app-dir: ~/app 
+          app-dir: /app 
 
 workflows:
   wf-pipeline:
     jobs:
       - node-install-packages
       - node/run:
-          app-dir: ~/app
+          app-dir: /app
       - node/test:
-          app-dir: ~/app
+          app-dir: /app
           run-command: test
           test-results-for: jest
