@@ -13,15 +13,24 @@ jobs:
           name: Install npm dependencies
           command: |
             npm install --save
-
+  job-deploy-heroku:
+    working_directory: ~/app
+    docker:
+      - image: circleci/heroku:1.2.6 
+    steps:
+      - checkout    
+    
 workflows:
   wf-test:
     jobs:
       - job-test-installDependencies
 
-  wf-deploy:
+  wf-deploy:  
     jobs:
+      - job-deploy-heroku
       - heroku/deploy-via-git:
+          requires:
+            - job-deploy-heroku
           filters:
             branches:
               only: main
