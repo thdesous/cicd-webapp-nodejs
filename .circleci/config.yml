@@ -5,12 +5,12 @@ orbs:
 
 jobs:
   node-install-packages:
+    working_directory: /app
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
-      - node/install-packages:
-          app-dir: /app
+      - node/install-packages
 
 workflows:
   wf-pipeline:
