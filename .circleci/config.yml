@@ -1,29 +1,17 @@
 version: 2.1
+orbs:
+  node: circleci/node@16.0
 jobs:
   test:
-    working_directory: ~/app
-    docker:
-      - image: cimg/node:15.1
+    executor: node/default
     steps:
       - checkout
-      - run:
-          name: Install packages
-          command: |
-            ls -al
-            pwd
-            cd /app
-            ls -al
-            npm install
-      - run:
-          name: Run App
-          command: |
-            ls -al
-            pwd
-            cd /app
-            ls -al
-            cat package.json
-
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+      - run: sudo npm install -g npm@latest
+      - run: npm run test
 workflows:
-  my-workflow:
+  test_my_app:
     jobs:
       - test
