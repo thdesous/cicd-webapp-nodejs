@@ -8,8 +8,8 @@ jobs:
       - run: 
           name: Install npm dependencies
           command: |
-          npm install --save
+            npm install --save
       - run: 
           name: Start service
           command: |
-          npm start
+            npm start
