@@ -1,9 +1,9 @@
 version: 2.1
 jobs:
   test:
+    working_directory: ~/app
     docker:
       - image: cimg/node:15.1
-    working_directory: ~/app
     steps:
       - checkout
       - run:
@@ -14,7 +14,7 @@ jobs:
           command: npm start
       - run:
           name: Run Tests
-          command: npm run test
+          command: cd npm test
 
 workflows:
   my-workflow:
