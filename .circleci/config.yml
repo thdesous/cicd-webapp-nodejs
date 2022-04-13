@@ -15,15 +15,13 @@ jobs:
             npm install --save
 
 workflows:
-  wf-builds:
+  wf-test:
     jobs:
       - job-test-installDependencies
 
   wf-deploy:
     jobs:
-      - heroku/deploy-via-git:  
-#          requires:
-#            - job-test-installDependencies
+      - heroku/deploy-via-git:
           filters:
             branches:
               only: main
