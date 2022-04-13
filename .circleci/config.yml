@@ -1,6 +1,8 @@
 version: 2.1
+working_directory: ~/app
 jobs:
-  test:
+  
+  install-packages:
     working_directory: ~/app
     docker:
       - image: cimg/node:15.1
@@ -9,14 +11,30 @@ jobs:
       - run:
           name: Install packages
           command: npm install
-      # - run:
-      #     name: Run App
-      #     command: npm start
+
+  run-app:
+    working_directory: ~/app
+    docker:
+      - image: cimg/node:15.1
+    steps:
+      - checkout
+      - run:      
+          name: Run App
+          command: npm start
+
+  run-tests:
+    working_directory: ~/app
+    docker:
+      - image: cimg/node:15.1
+    steps:
+      - checkout
       - run:
           name: Run Tests
-          command: cd npm test
+          command: npm test
 
 workflows:
   my-workflow:
     jobs:
-      - test
+      - install-packages
+      - run-app
+      - run-tests
