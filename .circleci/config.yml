@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  job_build_app:
+  job_test_installDependencies:
     working_directory: ~/app
     docker:
       - image: circleci/node:14
@@ -14,4 +14,4 @@ jobs:
 workflows:
   workflow_builds:
     jobs:
-      - job_build_app
+      - job_test_installDependencies
