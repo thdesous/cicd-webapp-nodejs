@@ -1,6 +1,9 @@
 version: 2.1
+orbs:
+  heroku: circleci/heroku@0.0.10  
+
 jobs:
-  job_test_installDependencies:
+  job-test-installDependencies:
     working_directory: ~/app
     docker:
       - image: circleci/node:14
@@ -12,6 +15,15 @@ jobs:
             npm install --save
 
 workflows:
-  workflow_builds:
+  wf-builds:
     jobs:
-      - job_test_installDependencies
+      - job-test-installDependencies
+
+  wf-deploy:
+    jobs:
+      - heroku/deploy-via-git:  
+          requires:
+            - job-test-installDependencies
+          filters:
+            branches:
+              only: main
