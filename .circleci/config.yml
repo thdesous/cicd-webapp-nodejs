@@ -8,8 +8,9 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - checkout
       - node/install-packages:
-          app-dir: /app 
+          app-dir: /app
 
 workflows:
   wf-pipeline:
