@@ -36,5 +36,9 @@ workflows:
   my-workflow:
     jobs:
       - install-packages
-      - run-app
-      - run-tests
+      - run-app:
+          requires:
+            - install-packages
+      - run-tests:
+          requires:
+            - run-app
