@@ -5,10 +5,10 @@ jobs:
       - image: thdesous/cicd-webapp-nodejs:latest
     steps:
       - checkout
-      - run: 
-          name: Install npm dependencies
-          command: |
-            npm install --save
+      # - run: 
+      #     name: Install npm dependencies
+      #     command: |
+      #       npm install --save
       - run: 
           name: Start service
           command: |
