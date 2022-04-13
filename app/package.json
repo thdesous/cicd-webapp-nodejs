@@ -5,9 +5,12 @@
   "author": "Thiago de Sousa Pereira",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "dependencies": {
-    "express": "^4.16.1"
+    "express": "^4.16.1",
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
   }
 }

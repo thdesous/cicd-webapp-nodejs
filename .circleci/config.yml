@@ -1,27 +1,23 @@
 version: 2.1
+
 orbs:
-  heroku: circleci/heroku@0.0.10  
+  node: circleci/node@5.0.2
 
 jobs:
-  job-test-installDependencies:
-    working_directory: ~/repo
+  node/install-packages:
     docker:
-      - image: circleci/node:14
+      - image: cimg/base:stable
     steps:
-      - checkout
-      - run: 
-          name: Install npm dependencies
-          command: |
-            npm install --save
+      - node/install-packages:
+          app-dir: ~/app 
 
 workflows:
-  wf-test:
+  wf-pipeline:
     jobs:
-      - job-test-installDependencies
-
-  wf-deploy:
-    jobs:
-      - heroku/deploy-via-git:
-          filters:
-            branches:
-              only: main
+      - node/install-packages
+      - node/run:
+          app-dir: ~/app
+      - node/test:
+          app-dir: ~/app
+          run-command: test
+          test-results-for: jest
