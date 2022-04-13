@@ -1,6 +1,7 @@
 version: 2.1
 jobs:
   test:
+    working_directory: ~/app
     docker:
       - image: cimg/node:15.1
     steps:
