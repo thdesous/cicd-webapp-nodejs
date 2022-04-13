@@ -22,6 +22,7 @@ workflows:
   wf-deploy:
     jobs:
       - heroku/deploy-via-git:
-          filters:
-            branches:
-              only: main
+        working_directory: ~/app
+        filters:
+          branches:
+            only: main
