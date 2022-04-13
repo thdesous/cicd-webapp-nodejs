@@ -12,6 +12,7 @@ jobs:
           name: Run App
           command: |
             ls -al
+            pwd
 
       - run:
           name: Run Tests
