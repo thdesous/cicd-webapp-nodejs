@@ -1,21 +1,15 @@
 version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+  
 jobs:
-  test:
+  example-job:
     docker:
-      - image: cimg/node:15.1
+      # replace with your preferred image
+      - image: cimg/base:stable
     steps:
-      - checkout
-      - run:
-          name: Install packages
-          command: npm install
-      - run:
-          name: Run App
-          command: npm start
-      - run:
-          name: Run Tests
-          command: npm run test
-
+      - node/install
 workflows:
-  my-workflow:
+  example-workflow:
     jobs:
-      - test
+      - example-job
