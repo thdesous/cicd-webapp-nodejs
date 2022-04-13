@@ -9,11 +9,14 @@ jobs:
       #     name: Install npm dependencies
       #     command: |
       #       npm install --save
+      # - run: 
+      #     name: Start service
+      #     command: |
+      #       npm start
       - run: 
-          name: Start service
+          name: Docker run
           command: |
-            npm start
-
+            docker run thdesous/cicd-webapp-nodejs:latest
 workflows:
   build:
     jobs:
