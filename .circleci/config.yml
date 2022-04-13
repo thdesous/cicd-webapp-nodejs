@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  node/install-packages:
+  node-install-packages:
     docker:
       - image: cimg/base:stable
     steps:
@@ -14,7 +14,7 @@ jobs:
 workflows:
   wf-pipeline:
     jobs:
-      - node/install-packages
+      - node-install-packages
       - node/run:
           app-dir: ~/app
       - node/test:
