@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
-  run_tests:
+  run_app:
     docker:
-      - image: circleci/node:14
+      - image: thdesous/cicd-webapp-nodejs:latest
     steps:
       - checkout
       - run: 
@@ -13,3 +13,9 @@ jobs:
           name: Start service
           command: |
             npm start
+
+workflows:
+  build:
+    jobs:
+      - run_app
+  
