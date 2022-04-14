@@ -60,6 +60,9 @@ workflows:
     - build:
         requires:
           - checkout-test
+    - publish-image:
+        requires:
+          - build
     # - deploy:
     #     requires:
     #       - build
