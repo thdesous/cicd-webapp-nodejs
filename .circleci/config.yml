@@ -14,7 +14,8 @@ jobs:
           name: Run tests
           command: |
             cd app/
-            npm test --reporter mocha-junit-reporter --reporter-options mochaFile=./test_results.xml
+            npm test
+          when: always
       - store_test_results:
           path: ~/project/app/test
       - store_artifacts:
