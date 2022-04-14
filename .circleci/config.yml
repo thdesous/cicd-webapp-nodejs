@@ -14,15 +14,14 @@ jobs:
           name: Run tests
           command: |
             cd app/
-            mkdir test
             mocha test --reporter mocha-junit-reporter
           environment:
-            MOCHA_FILE: test/test-results.xml
+            MOCHA_FILE: ~/project/app/test/test-results.xml
           when: always
       - store_test_results:
-          path: test
+          path: ~/project/app/test
       - store_artifacts:
-          path: test      
+          path: ~/project/app/test
 
 workflows:
   my-workflow:
