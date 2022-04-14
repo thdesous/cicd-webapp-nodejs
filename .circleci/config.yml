@@ -22,7 +22,7 @@ jobs:
           path: ~/project/app/test
   build:
     environment:
-      IMAGE_NAME: thdesous/cicd-webapp-nodejs      
+      IMAGE_NAME: thdesous/cicd-webapp-nodejs
     docker:
       - image: cimg/base:stable
     steps:
@@ -33,6 +33,19 @@ jobs:
           command: |
             cd app/
             docker build -t $IMAGE_NAME:latest .
+
+  publish-image:
+    environment:
+      IMAGE_NAME: thdesous/cicd-webapp-nodejs
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:latest
 
   # deploy:  
   #   docker:
