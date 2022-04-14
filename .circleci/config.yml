@@ -17,7 +17,7 @@ jobs:
             npm test
           when: always
       - store_test_results:
-          path: test-results
+          path: ~/project/app/test
       - store_artifacts:
           path: ~/project/app/test
 
