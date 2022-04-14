@@ -24,7 +24,7 @@ jobs:
     environment:
       IMAGE_NAME: thdesous/cicd-webapp-nodejs      
     docker:
-      - image: cimg/base
+      - image: cimg/base:stable
     steps:
       - checkout
       - setup_remote_docker
