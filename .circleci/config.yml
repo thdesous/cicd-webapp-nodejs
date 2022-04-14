@@ -10,6 +10,7 @@ jobs:
       - run:
           name: Install npm dependencies
           command: |
+            npm cache clean --force
             npm install --save
       # - run:
       #     name: Run Unit Tests
