@@ -62,7 +62,9 @@ jobs:
           command: docker load -i /tmp/workspace/image.tar
       - run:
           name: Publish Docker Image to Docker Hub
-          command: docker push $IMAGE_NAME:latest
+          command: |
+            docker login
+            docker push $IMAGE_NAME:latest
 
   # deploy:  
   #   docker:
