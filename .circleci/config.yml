@@ -8,12 +8,13 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
+          app-dir:  ~/project/app
           pkg-manager: npm
       - run:
           name: Run tests
           command: npm test
       - store_test_results:
-          path: ~/project/app/test/test-results 
+          path: ~/project/app/test/test-results
 
 workflows:
   my-workflow:
