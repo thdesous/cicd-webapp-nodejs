@@ -16,7 +16,7 @@ jobs:
             cd app/
             npm test
       - store_test_results:
-          path: ~/project
+          path: test-results
 
 workflows:
   my-workflow:
