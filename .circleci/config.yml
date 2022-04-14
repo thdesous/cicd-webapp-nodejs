@@ -27,5 +27,5 @@ workflows:
       - install-dependencies
       - node/test:
           test-results-for: mocha 
-          test-results-path: test-results 
+          test-results-path: ~/project/app/test/test-results 
           app-dir: ~/project/app
