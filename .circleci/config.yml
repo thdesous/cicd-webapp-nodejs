@@ -22,7 +22,7 @@ jobs:
           path: ~/project/app/test
   build:
     environment:
-      IMAGE_NAME: thedesous/cicd-webapp-nodejs      
+      IMAGE_NAME: thdesous/cicd-webapp-nodejs      
     docker:
       - image: circleci/buildpack-deps:stretch  
     working_directory: ~/project/app
