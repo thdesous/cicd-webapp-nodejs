@@ -14,7 +14,7 @@ jobs:
           name: Run tests
           command: |
             cd app/
-            npm test --recursive  --reporter mocha-junit-reporter --reporter-options mochaFile=test_results.xml --timeout 60000 --exit
+            npm test --reporter mocha-junit-reporter --reporter-options mochaFile=./test_results.xml --timeout 60000 --exit
       - store_test_results:
           path: ~/project/app/test
       - store_artifacts:
