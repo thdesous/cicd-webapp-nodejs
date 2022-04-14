@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "mocha 'test/**/*.js' --recursive --reporter mocha-junit-reporter --reporter-options mochaFile=./test/test_result.xml --timeout 60000 --exit"
+    "test": "mocha"
     },
   "dependencies": {
     "ejs": "^2.6.1",
