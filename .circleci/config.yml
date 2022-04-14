@@ -1,20 +1,17 @@
 version: 2.1
+orbs:
+  node: circleci/node@4.7
 jobs:
   install-dependencies:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:16.10
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: npm
       - run:
-          name: Install npm dependencies
-          command: |
-            npm install --save
-      - app-dir:  ~/project/app
-      - run:
-          name: Run Unit Tests
-          command: |
-            npm test
-      - app-dir:  ~/project/app 
+          name: Run tests
+          command: npm test
       - store_test_results:
           path: ~/project/app/test/test-results 
 
