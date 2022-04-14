@@ -52,7 +52,7 @@ jobs:
             - ./image.tar            
 
   publish-image:
-    executor: docker-publisher
+    executor: docker-executor
     steps:
       - attach_workspace:
           at: /tmp/workspace
