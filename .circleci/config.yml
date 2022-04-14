@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@4.7
 jobs:
-  Checkout_and_Test:
+  checkout-test:
     docker:
       - image: cimg/node:16.10
     steps:
@@ -20,7 +20,7 @@ jobs:
           path: ~/project/app/test
       - store_artifacts:
           path: ~/project/app/test
-  Build:
+  build:
     environment:
       IMAGE_NAME: thedesous/cicd-webapp-nodejs
     docker:
@@ -32,7 +32,7 @@ jobs:
           name: Build Docker image
           command: docker build -t $IMAGE_NAME:latest .
 
-  # Deploy:  
+  # deploy:  
   #   docker:
   #     - image: cimg/node:16.10
   #   steps:
@@ -41,10 +41,10 @@ jobs:
 workflows:
   ci-cd:
     jobs:
-    - Checkout_and_Test
-    # - Build:
+    - checkout-test
+    - build:
+        requires:
+          - checkout-test
+    # - deploy:
     #     requires:
-    #       - Checkout_and_Test
-    # - Deploy:
-    #     requires:
-    #       - Build
+    #       - build
