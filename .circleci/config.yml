@@ -2,12 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@4.7
 jobs:
-  Checkout:
-    docker:
-      - image: cimg/node:16.10
-    steps:
-      - checkout
-  Test:  
+  Checkout_and_Test:
     docker:
       - image: cimg/node:16.10
     steps:
@@ -25,11 +20,17 @@ jobs:
           path: ~/project/app/test
       - store_artifacts:
           path: ~/project/app/test
-  # Build:  
-  #   docker:
-  #     - image: cimg/node:16.10
-  #   steps:
-  #     - buil
+  Build:
+    environment:
+      IMAGE_NAME: thedesous/cicd-webapp-nodejs
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:latest .
 
   # Deploy:  
   #   docker:
@@ -40,13 +41,10 @@ jobs:
 workflows:
   ci-cd:
     jobs:
-    - Checkout
-    - Test:
-        requires:
-          - Checkout
+    - Checkout_and_Test
     # - Build:
     #     requires:
-    #       - Test    
+    #       - Checkout_and_Test
     # - Deploy:
     #     requires:
     #       - Build
