@@ -13,8 +13,8 @@ jobs:
       - run:         
           name: Run tests
           command: |
-          cd app/
-          npm test
+            cd app/
+            npm test
       - store_test_results:
           path: ~/project/app/test/test-results
 
