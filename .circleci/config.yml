@@ -2,11 +2,15 @@ version: 2.1
 orbs:
   node: circleci/node@4.7
 jobs:
-  install-dependencies:
+  Checkout:
     docker:
       - image: cimg/node:16.10
     steps:
       - checkout
+  Test:  
+    docker:
+      - image: cimg/node:16.10
+    steps:
       - node/install-packages:
           app-dir:  ~/project/app
           pkg-manager: npm
@@ -20,8 +24,28 @@ jobs:
           path: ~/project/app/test
       - store_artifacts:
           path: ~/project/app/test
+  # Build:  
+  #   docker:
+  #     - image: cimg/node:16.10
+  #   steps:
+  #     - buil
+
+  # Deploy:  
+  #   docker:
+  #     - image: cimg/node:16.10
+  #   steps:
+  #     - deploy
 
 workflows:
-  my-workflow:
+  ci-cd:
     jobs:
-      - install-dependencies
+    - Checkout
+    - Test:
+        requires:
+          - Checkout
+    # - Build:
+    #     requires:
+    #       - Test    
+    # - Deploy:
+    #     requires:
+    #       - Build
