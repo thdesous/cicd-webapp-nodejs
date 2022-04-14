@@ -24,7 +24,7 @@ jobs:
     environment:
       IMAGE_NAME: thdesous/cicd-webapp-nodejs      
     docker:
-      - image: circleci/buildpack-deps:stretch   
+      - image: cimg/base
     steps:
       - checkout
       - setup_remote_docker
