@@ -14,8 +14,7 @@ jobs:
           name: Run tests
           command: |
             cd app/
-            npm test
-            mocha test --reporter mocha-junit-reporter
+            npm test --reporter mocha-junit-reporter
       - store_test_results:
           path: ~/project
       
