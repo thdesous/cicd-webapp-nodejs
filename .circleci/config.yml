@@ -3,20 +3,20 @@ jobs:
   install-dependencies:
     docker:
       - image: circleci/node:12
-    working_directory: ~/project/app
     steps:
       - checkout
       - run:
           name: Install npm dependencies
           command: |
             npm install --save
+      - app-dir:  ~/project/app
       - run:
           name: Run Unit Tests
           command: |
             npm test
+      - app-dir:  ~/project/app 
       - store_test_results:
           path: ~/project/app/test/test-results 
-
 
 workflows:
   my-workflow:
