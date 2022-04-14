@@ -15,8 +15,10 @@ jobs:
           command: |
             cd app/
             npm test
+            mocha test --reporter mocha-junit-reporter
       - store_test_results:
-          path: ~/project/app
+          path: ~/project
+      
 
 workflows:
   my-workflow:
