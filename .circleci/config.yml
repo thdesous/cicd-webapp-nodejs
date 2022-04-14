@@ -14,11 +14,11 @@ jobs:
           name: Run tests
           command: |
             cd app/
-            npm test
+            npm test --recursive --reporter mocha-junit-reporter --reporter-options mochaFile=test_results.xml --timeout 60000 --exit
       - store_test_results:
-          path: ~/app/test/
+          path: ~/project/app/test
       - store_artifacts:
-          path: ~/app/test/
+          path: ~/project/app/test
 
 workflows:
   my-workflow:
