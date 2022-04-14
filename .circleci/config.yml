@@ -26,7 +26,7 @@ workflows:
     jobs:
       - install-dependencies
       - node/test:
-          run-command: npm cache clean --force
+          run-command: npm ci
           test-results-for: mocha 
           test-results-path: ~/project/app/test/test-results 
           app-dir: ~/project/app
