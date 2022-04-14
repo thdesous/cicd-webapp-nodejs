@@ -1,6 +1,18 @@
 version: 2.1
+
 orbs:
   node: circleci/node@4.7
+
+executors:
+  docker-executor:
+    environment:
+      IMAGE_NAME: thdesous/cicd-webapp-nodejs
+    docker:
+      - image: cimg/base:stable
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASS
+
 jobs:
   checkout-test:
     docker:
@@ -20,11 +32,9 @@ jobs:
           path: ~/project/app/test
       - store_artifacts:
           path: ~/project/app/test
+  
   build:
-    environment:
-      IMAGE_NAME: thdesous/cicd-webapp-nodejs
-    docker:
-      - image: cimg/base:stable
+    executor: docker-executor
     steps:
       - checkout
       - setup_remote_docker
@@ -33,22 +43,26 @@ jobs:
           command: |
             cd app/
             docker build -t $IMAGE_NAME:latest .
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar            
 
   publish-image:
-    environment:
-      IMAGE_NAME: thdesous/cicd-webapp-nodejs
-    docker:
-      - image: cimg/base:stable
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASS
+    executor: docker-publisher
     steps:
-      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - setup_remote_docker
       - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
           name: Publish Docker Image to Docker Hub
-          command: |            
-            docker push $IMAGE_NAME:latest
+          command: docker push $IMAGE_NAME:latest
 
   # deploy:  
   #   docker:
