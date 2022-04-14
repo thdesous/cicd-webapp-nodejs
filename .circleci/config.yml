@@ -26,7 +26,9 @@ workflows:
     jobs:
       - install-dependencies
       - node/test:
-          run-command: npm ci
+          cache-version: testeversion 
+          app-dir:  ~/project/app 
+          #override-ci-command: string 
+          run-command: test 
           test-results-for: mocha 
           test-results-path: ~/project/app/test/test-results 
-          app-dir: ~/project/app
