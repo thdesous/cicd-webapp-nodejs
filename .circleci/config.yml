@@ -11,6 +11,7 @@ jobs:
           app-dir:  ~/project/app
           pkg-manager: npm
       - run:
+          app-dir:  ~/project/app
           name: Run tests
           command: npm test
       - store_test_results:
