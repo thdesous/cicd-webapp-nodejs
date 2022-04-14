@@ -28,4 +28,4 @@ workflows:
       - node/test:
           test-results-for: mocha 
           test-results-path: test-results 
-          #app-dir: ~/app/test
+          app-dir: ~/project/app
