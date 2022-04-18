@@ -92,9 +92,14 @@ jobs:
     executor: terraform/default
     working_directory: ~/project
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - terraform/init:
+          path: .
+      - terraform/validate:
+          path: .
+      - terraform/fmt:
           path: .
       - terraform/plan:
           path: .
