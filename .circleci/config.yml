@@ -95,15 +95,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - terraform/init:
-          path: .
-      - terraform/validate:
-          path: .
-      - terraform/fmt:
-          path: .
-      - terraform/plan:
-          path: .
       - terraform/destroy:
+          backend: true
+          backend_config_file: backend.azurerm
           path: .
 
 workflows:
