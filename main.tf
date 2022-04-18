@@ -12,15 +12,10 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "resource_group" {
-  name     = "rg-cicd"
-  location = "brazilsouth"
-}
-
 resource "azurerm_container_group" "container_group" {
   name                = "webapp-nodejs"
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = "brazilsouth"
+  resource_group_name = "rg-cicd"
   ip_address_type     = "Public"
   dns_name_label      = "webapp-nodejs"
   os_type             = "Linux"
