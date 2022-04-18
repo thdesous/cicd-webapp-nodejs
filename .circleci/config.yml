@@ -93,6 +93,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - terraform/init:
+          path: .
       - terraform/plan:
           path: .
       - terraform/destroy:
