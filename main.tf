@@ -48,5 +48,7 @@ resource "azurerm_container_group" "container_group" {
 }
 
 output "azurerm_container_group" {
-  value = azurerm_container_group.container_group
+  ip_address = "azurerm_container_group.container_group.ip_address"
+  port = "azurerm_container_group.container_group.exposed_port.port"
+  sensitive = true
 }
