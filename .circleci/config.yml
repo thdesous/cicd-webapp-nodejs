@@ -68,7 +68,7 @@ jobs:
             docker push $IMAGE_NAME:latest
 
 
-  deploy-apply:
+  deploy:
     executor: terraform/default 
     steps:
       - checkout
@@ -88,7 +88,7 @@ jobs:
             - .    
     working_directory: ~/project
 
-  deploy-destroy:
+  destroy:
     executor: terraform/default 
     steps:
       - attach_workspace:
@@ -107,8 +107,11 @@ workflows:
     # - publish-image:
     #     requires:
     #       - build
-    - deploy-apply
-    - deploy-destroy:
+    - deploy
+    - continue-destroy:
         requires:
-          - deploy-apply
+          - deploy
         type: approval
+    - destroy:
+        requires:
+          - continue-destroy    
