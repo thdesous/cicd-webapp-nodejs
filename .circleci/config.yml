@@ -113,7 +113,9 @@ workflows:
     - publish-image:
         requires:
           - build
-    - deploy
+    - deploy:
+        requires:
+          - publish-image
     - continue-destroy:
         requires:
           - deploy
