@@ -90,6 +90,7 @@ jobs:
 
   destroy:
     executor: terraform/default
+    working_directory: ~/project
     steps:
       - attach_workspace:
           at: .
@@ -99,7 +100,6 @@ jobs:
           path: .
       - terraform/destroy:
           path: .
-    working_directory: ~/project
 
 workflows:
   ci-cd:
