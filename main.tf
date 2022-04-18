@@ -14,7 +14,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "resource_group" {
   name     = "rg-cicd"
-  location = "East US"
+  location = "brazilsouth"
 }
 
 resource "azurerm_container_group" "container_group" {
@@ -34,7 +34,7 @@ resource "azurerm_container_group" "container_group" {
     name     = "container-webapp-nodejs"
     image    = "thdesous/cicd-webapp-nodejs:latest"
     cpu      = "0.5"
-    memory   = "1.5"
+    memory   = "1.0"
     commands = ["npm", "start"]
     ports {
       port     = 3000
