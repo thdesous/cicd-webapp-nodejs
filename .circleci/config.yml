@@ -84,19 +84,19 @@ jobs:
           path: .
       # - terraform/destroy:
       #     path: .
-    working_directory: ~/src
+    working_directory: ~/project
 
 workflows:
   ci-cd:
     jobs:
-    - checkout-test
-    - build:
-        requires:
-          - checkout-test
-    - publish-image:
-        requires:
-          - build
-    - deploy:
+    # - checkout-test
+    # - build:
+    #     requires:
+    #       - checkout-test
+    # - publish-image:
+    #     requires:
+    #       - build
+    - deploy
         #type: approval
-        requires:
-        - publish-image
+        #requires:
+        #- publish-image
