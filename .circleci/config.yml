@@ -69,7 +69,7 @@ jobs:
 
 
   deploy:
-    executor: terraform/default
+    executor: terraform/default 
     steps:
       - checkout
       - terraform/init:
@@ -97,6 +97,6 @@ workflows:
         requires:
           - build
     - deploy:
-        type: approval
+        #type: approval
         requires:
         - publish-image
