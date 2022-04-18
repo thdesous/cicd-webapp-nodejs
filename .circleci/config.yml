@@ -69,36 +69,44 @@ jobs:
 
 
   deploy:
-    executor: terraform/default 
-    working_directory: ~/project
+    working_directory: /tmp/project
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
       - checkout
-      - terraform/init:
-          path: .
-      - terraform/validate:
-          path: .
-      - terraform/fmt:
-          path: .
-      - terraform/plan:
-          path: .
-      - terraform/apply:
-          path: .
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform init -input=false
+            terraform plan -out tfapply -var-file variables.tfvars
+      - run:
+          name: terraform apply
+          command: |
+            terraform apply -auto-approve tfapply
+
       - persist_to_workspace:
           root: .
           paths:
             - .
 
   destroy:
-    executor: terraform/default
-    working_directory: ~/project
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
-      - checkout
       - attach_workspace:
           at: .
-      - terraform/destroy:
-          backend: true
-          backend_config_file: backend.azurerm
-          path: .
+      - run:
+          name: terraform create destroy plan
+          command: |
+            terraform plan -destroy -out tfdestroy -var-file variables.tfvars
+      - run:
+          name: terraform destroy
+          command: |
+            terraform apply -auto-approve tfdestroy
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
 workflows:
   ci-cd:
