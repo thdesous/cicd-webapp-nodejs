@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.7
+  terraform: circleci/terraform@3.0.1
 
 executors:
   docker-executor:
@@ -66,11 +67,24 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
 
-  # deploy:  
-  #   docker:
-  #     - image: cimg/node:16.10
-  #   steps:
-  #     - deploy
+
+  deploy:
+    executor: terraform/default
+    steps:
+      - checkout
+      - terraform/init:
+          path: .
+      - terraform/validate:
+          path: .
+      - terraform/fmt:
+          path: .
+      - terraform/plan:
+          path: .
+      - terraform/apply:
+          path: .
+      # - terraform/destroy:
+      #     path: .
+    working_directory: ~/src
 
 workflows:
   ci-cd:
@@ -82,6 +96,7 @@ workflows:
     - publish-image:
         requires:
           - build
-    # - deploy:
-    #     requires:
-    #       - build
+    - deploy:
+        type: approval
+        requires:
+        - publish-image

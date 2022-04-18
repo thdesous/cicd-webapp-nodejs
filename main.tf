@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "resource_group" {
   location = "East US"
 }
 
-resource "azurerm_container_group" "example" {
+resource "azurerm_container_group" "container_group" {
   name                = "webapp-nodejs"
   location            = azurerm_resource_group.resource_group.location
   resource_group_name = azurerm_resource_group.resource_group.name
@@ -45,4 +45,8 @@ resource "azurerm_container_group" "example" {
     "item-type"      = "container-instance",
     "resource-group" = "rg-cicd"
   }
+}
+
+output "azurerm_container_group" {
+  value = azurerm_container_group.container_group
 }
