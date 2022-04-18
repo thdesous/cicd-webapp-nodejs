@@ -70,6 +70,7 @@ jobs:
 
   deploy:
     executor: terraform/default 
+    working_directory: ~/project
     steps:
       - checkout
       - terraform/init:
@@ -85,14 +86,13 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .    
-    working_directory: ~/project
+            - .
 
   destroy:
-    executor: terraform/default 
+    executor: terraform/default
     steps:
       - attach_workspace:
-          at: .    
+          at: .
       - terraform/destroy:
           path: .
     working_directory: ~/project
