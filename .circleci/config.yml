@@ -112,7 +112,3 @@ workflows:
         requires:
           - deploy-apply
         type: approval
-            
-        #type: approval
-        #requires:
-        #- publish-image

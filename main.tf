@@ -6,6 +6,13 @@ terraform {
     }
   }
   required_version = ">= 1.0.0"
+
+  backend "azurerm" {
+    resource_group_name  = "rg-cicd"
+    storage_account_name = "storageaccountwebnodejs"
+    container_name       = "terraform-state"
+    key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
