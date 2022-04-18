@@ -93,6 +93,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - terraform/plan:
+          path: .
       - terraform/destroy:
           path: .
     working_directory: ~/project
