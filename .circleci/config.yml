@@ -67,46 +67,52 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
 
-
   deploy:
-    executor: terraform/default 
-    working_directory: ~/project
+    working_directory: /tmp/project
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
       - checkout
-      - terraform/init:
-          path: .
-      - terraform/validate:
-          path: .
-      - terraform/fmt:
-          path: .
-      - terraform/plan:
-          path: .
-      - terraform/apply:
-          path: .
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform init -input=false
+            terraform plan -out tfapply
+      - run:
+          name: terraform apply
+          command: |
+            terraform apply -auto-approve tfapply
+
       - persist_to_workspace:
           root: .
           paths:
             - .
 
   destroy:
-    executor: terraform/default
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
       - attach_workspace:
           at: .
-      - terraform/destroy:
-          path: .
-    working_directory: ~/project
+      - run:
+          name: terraform create destroy plan
+          command: |
+            terraform plan -destroy -out tfdestroy 
+      - run:
+          name: terraform destroy
+          command: |
+            terraform apply -auto-approve tfdestroy
 
 workflows:
   ci-cd:
     jobs:
-    # - checkout-test
-    # - build:
-    #     requires:
-    #       - checkout-test
-    # - publish-image:
-    #     requires:
-    #       - build
+    - checkout-test
+    - build:
+        requires:
+          - checkout-test
+    - publish-image:
+        requires:
+          - build
     - deploy
     - continue-destroy:
         requires:
@@ -114,4 +120,4 @@ workflows:
         type: approval
     - destroy:
         requires:
-          - continue-destroy    
+          - continue-destroy
