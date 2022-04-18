@@ -1,37 +1,48 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.2"
+    }
+  }
+  required_version = ">= 1.1.0"
+}
 
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
-  location = "West Europe"
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "resource_group" {
+  name     = "rg-cicd"
+  location = "East US"
 }
 
 resource "azurerm_container_group" "example" {
-  name                = "example-continst"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  ip_address_type     = "public"
-  dns_name_label      = "aci-label"
+  name                = "webapp-nodejs"
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  ip_address_type     = "Public"
+  dns_name_label      = "webapp-nodejs"
   os_type             = "Linux"
+  restart_policy      = "OnFailure"
+  exposed_port = [{
+    port     = 3000
+    protocol = "TCP"
+  }]
 
   container {
-    name   = "hello-world"
-    image  = "mcr.microsoft.com/azuredocs/aci-helloworld:latest"
-    cpu    = "0.5"
-    memory = "1.5"
-
+    name     = "container-webapp-nodejs"
+    image    = "thdesous/cicd-webapp-nodejs:latest"
+    cpu      = "0.5"
+    memory   = "1.5"
+    commands = ["npm", "start"]
     ports {
-      port     = 443
+      port     = 3000
       protocol = "TCP"
     }
   }
-
-  container {
-    name   = "sidecar"
-    image  = "mcr.microsoft.com/azuredocs/aci-tutorial-sidecar"
-    cpu    = "0.5"
-    memory = "1.5"
-  }
-
   tags = {
-    environment = "testing"
+    "item-type"      = "container-instance",
+    "resource-group" = "rg-cicd"
   }
 }
